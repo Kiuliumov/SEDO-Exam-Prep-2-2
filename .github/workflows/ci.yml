@@ -1,28 +1,40 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# This workflow builds and tests a .NET 6 project
+# For more information: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: .NET 6 CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - develop
+      - 'feature/*'    # any branch starting with feature/
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - develop
+      - 'feature/*'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      # Step 1: Checkout the repo
+      - uses: actions/checkout@v4
+
+      # Step 2: Setup .NET 6 SDK
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      # Step 3: Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Step 4: Build the project
+      - name: Build
+        run: dotnet build --no-restore
+
+      # Step 5: Run tests
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
