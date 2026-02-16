@@ -1,9 +1,8 @@
 pipeline {
     agent any
 
-    // Trigger on changes to main branch
     triggers {
-        pollSCM('H/5 * * * *') // optional: poll every 5 minutes
+        pollSCM('H/5 * * * *') 
     }
 
     environment {
@@ -19,7 +18,6 @@ pipeline {
 
         stage('Setup .NET') {
             steps {
-                // Install .NET SDK if not present
                 sh '''
                 if ! dotnet --version >/dev/null 2>&1; then
                     wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
