@@ -1,10 +1,6 @@
 pipeline {
     agent any
-
-    triggers {
-        pollSCM('H/5 * * * *') 
-    }
-
+    
     environment {
         DOTNET_VERSION = '6.0'
     }
@@ -49,12 +45,4 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            echo "Build and tests succeeded!"
-        }
-        failure {
-            echo "Build or tests failed."
-        }
-    }
-}
+
